@@ -20,6 +20,10 @@ class UserServices {
         return userRepository.getUserByName(name);
     }
     static async updateUser(id, updates) {
+        const user = await userRepository.getUserById(id);
+        if (!user) {
+            throw new Error(`User with ID ${id} not found`);
+        }
         if (!updates || typeof updates !== 'object') {
             throw new Error("No updates provided");
         }

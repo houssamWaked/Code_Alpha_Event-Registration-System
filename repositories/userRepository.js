@@ -9,7 +9,7 @@ class UserRepository {
         if (transaction) {
             console.log(`Rolling back transaction due to error in ${method}`);
         }
-        throw e; // Throw the original error to preserve stack trace
+        throw e; 
     }
 
     static async createUser(userData) {
@@ -40,7 +40,7 @@ class UserRepository {
     }
 
     static async getAllUsers() {
-        // Read-only operation doesn't need transaction
+    
         try {
             return await User.findAll();
         } catch (e) {
@@ -49,7 +49,7 @@ class UserRepository {
     }
 
     static async getUserByEmail(email) {
-        // Read-only operation doesn't need transaction
+ 
         try {
             const user = await User.findOne({ where: { email } });
          
@@ -60,7 +60,7 @@ class UserRepository {
     }
 
     static async getUserById(id) {
-        // Read-only operation doesn't need transaction
+        
         try {
             const user = await User.findByPk(id);
             if (!user) {
@@ -73,7 +73,7 @@ class UserRepository {
     }
     
     static async getUserByName(name) {
-        // Read-only operation doesn't need transaction
+      
         try {
             const user = await User.findOne({ where: { name } });
 
@@ -125,7 +125,7 @@ class UserRepository {
     }
     
     static async getUserRole(id) {
-        // Read-only operation doesn't need transaction
+    
         try {
             const user = await User.findByPk(id);
     

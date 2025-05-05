@@ -37,6 +37,22 @@ const ValidateEventCreation = [
         .notEmpty().withMessage('Creator ID is required')
         .isInt({ gt: 0 }).withMessage('Creator ID must be a positive integer'),
 
+        body('capacity')
+        .notEmpty().withMessage('Event capacity is required')
+        .isInt({ gt: 0 }).withMessage('Event capacity must be a positive integer'),
+
+        body('ticket_price')
+        .notEmpty().withMessage('Ticket price is required')
+        .isNumeric().withMessage('Ticket price must be a number')
+        .custom((value) => {
+            if (value < 0) {
+                throw new Error('Ticket price must be a positive number');
+            }
+            return true;
+        }),
+    body('enrollment')
+        .notEmpty().withMessage('Enrollment is required'), 
+
     handleValidationErrors,
 ];
 
@@ -97,6 +113,24 @@ const ValidateEventUpdate = [
     body('created_by')
         .optional()
         .isInt({ gt: 0 }).withMessage('Creator ID must be a positive integer'),
+        body('capacity')
+        .optional()
+        .notEmpty().withMessage('Event capacity is required')
+        .isInt({ gt: 0 }).withMessage('Event capacity must be a positive integer'),
+
+        body('ticket_price')
+        .optional()
+        .notEmpty().withMessage('Ticket price is required')
+        .isNumeric().withMessage('Ticket price must be a number')
+        .custom((value) => {
+            if (value < 0) {
+                throw new Error('Ticket price must be a positive number');
+            }
+            return true;
+        }),
+    body('enrollment')
+        .optional()
+        .notEmpty().withMessage('Enrollment is required'), 
 
     handleValidationErrors,
 ];

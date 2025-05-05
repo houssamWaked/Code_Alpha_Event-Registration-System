@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const sequelize = require('../config/sequelize');
 const Event = require('../models/eventModel');
+const User = require('../models/userModel');
 
 class EventRepository {
     static handleError(e, method, transaction = null) {
@@ -16,7 +17,7 @@ class EventRepository {
     static async createEvent(eventData) {
         const t = await sequelize.transaction();
         try {
-            // Check for duplicate title
+           
             const existing = await Event.findOne({
                 where: { title: eventData.title },
                 transaction: t
@@ -25,7 +26,7 @@ class EventRepository {
                 throw new Error(`An event with the title '${eventData.title}' already exists.`);
             }
 
-            // Check for location/time conflict
+         
             const conflict = await Event.findOne({
                 where: {
                     location: eventData.location,
@@ -85,7 +86,7 @@ class EventRepository {
 
     static async getEventByLocation(location) {
         try {
-            return await Event.findAll({ where: { location } });
+            return await Event.findOne({ where: { location } });
         } catch (e) {
             this.handleError(e, 'getEventByLocation');
         }
@@ -93,7 +94,12 @@ class EventRepository {
 
     static async getEventByCreatedBy(created_by) {
         try {
-            return await Event.findAll({ where: { created_by } });
+           const events= await Event.findAll({ where: { created_by } });
+            if (events.length==0) {
+                throw new Error(`No events found for user with ID ${created_by}.`);
+            }
+            return events;
+
         } catch (e) {
             this.handleError(e, 'getEventByCreatedBy');
         }
@@ -106,7 +112,8 @@ class EventRepository {
             if (!event) {
                 throw new Error(`Event with ID ${id} not found.`);
             }
-
+    
+            
             if (updates.title && updates.title !== event.title) {
                 const existing = await Event.findOne({
                     where: {
@@ -119,7 +126,7 @@ class EventRepository {
                     throw new Error(`Another event with the title '${updates.title}' already exists.`);
                 }
             }
-
+    
             if (updates.location && updates.start_time && updates.end_time) {
                 const conflict = await Event.findOne({
                     where: {
@@ -142,13 +149,34 @@ class EventRepository {
                     throw new Error(`Location '${updates.location}' is already booked for the specified time.`);
                 }
             }
-
+    
             await event.update(updates, { transaction: t });
             await t.commit();
             return event;
         } catch (e) {
             await t.rollback();
             this.handleError(e, 'updateEvent', t);
+        }
+    }
+    
+
+    static async getEventCreatorByEventId(event_id) {
+        try {
+            const user_id = await Event.findOne({
+                where: { event_id },
+                attributes: ['created_by']
+            });
+            const user = await User.findOne({
+                where: { id: user_id.created_by },
+                attributes: ['id', 'name', 'email', 'role']
+            });
+            if (!user) {
+                throw new Error(`User with ID ${user_id.created_by} not found.`);
+            }
+            return user;
+
+        } catch (e) {
+            this.handleError(e, 'getEventCreatorByEventId');
         }
     }
 

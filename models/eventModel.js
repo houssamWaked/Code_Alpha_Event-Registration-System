@@ -43,7 +43,22 @@ const Event = sequelize.define('events', {
         allowNull: false,
         defaultValue: DataTypes.NOW,
     },
-}, {
+    capacity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    ticket_price: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+    },
+    enrollment:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+},
+
+
+ {
     tableName: 'events',
     timestamps: false,
     underscored: true,
@@ -62,6 +77,18 @@ const Event = sequelize.define('events', {
         {
             fields: ['end_time']
         },
+        {
+            fields: ['location']
+        },
+        {
+            fields: ['capacity']
+        },
+        {
+            fields: ['ticket_price']
+        },
+        {
+            fields: ['enrollment']
+        }
     ]
 });
 
