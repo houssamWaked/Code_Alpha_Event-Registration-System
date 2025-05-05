@@ -7,6 +7,10 @@ class EventServices {
         if (!user) {
             throw new Error(`User with ID ${eventData.createdById} not found`);
         }
+        const role=await UserRepository.getUserRole(eventData.created_by)
+        if (role !== 'admin') {
+            throw new Error(`User with ID ${eventData.created_by} is not an admin`);
+        }
         return await EventRepository.createEvent(eventData);
     }
 
@@ -43,6 +47,14 @@ class EventServices {
     }
 
     static async updateEvent(eventId, updates) {
+        if (!updates || typeof updates !== 'object') {
+            throw new Error("No updates provided");
+        }
+    
+        const role = await UserRepository.getUserRole(updates.created_by)
+        if (role !== 'admin') {
+            throw new Error(`User with ID ${updates.created_by} is not an admin`);
+        }
         return await EventRepository.updateEvent(eventId, updates);
     }
 

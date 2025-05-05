@@ -124,7 +124,16 @@ class UserRepository {
         }
     }
     
+    static async getUserRole(id) {
+        // Read-only operation doesn't need transaction
+        try {
+            const user = await User.findByPk(id);
     
+            return user.role;
+        } catch (e) {
+            this.handleError(e, 'getUserRole');
+        }
+    }
     
 
     static async deleteUser(id) {
