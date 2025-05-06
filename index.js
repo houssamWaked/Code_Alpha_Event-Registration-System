@@ -9,6 +9,7 @@ const sequelize = require('./config/sequelize'); // Sequelize ORM instance to in
 //routes
 const userRoutes = require('./routes/userRoutes'); // User-related routes
 const eventRoutes = require('./routes/eventRoutes'); // Event-related routes
+const registrationRoutes = require('./routes/registrationRoutes'); // Registration-related routes
 // Initialize Express application
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.json());
 // Set up routes
 app.use('/api/users', userRoutes); // Mount user routes under /api/users
 app.use('/api/events', eventRoutes); // Mount event routes under /api/events
+app.use('/api/registrations', registrationRoutes); // Mount registration routes under /api/registrations
 // Sync Sequelize models with the database
 sequelize
   .sync() // Synchronize Sequelize models with the database schema
