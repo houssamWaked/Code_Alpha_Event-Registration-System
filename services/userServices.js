@@ -37,6 +37,13 @@ class UserServices {
     
         return userRepository.updateUser(id, updates);
     }
+    static async authenticateUser(email, password) {
+        const user = await userRepository.getUserByEmail(email);
+        if (!user) throw new Error('Invalid credentials');
+        const isMatch = await bcrypt.compare(password, user.password_hash);
+        if (!isMatch) throw new Error('Invalid credentials');
+        return user;
+    }
     
     
     static deleteUser(id) {

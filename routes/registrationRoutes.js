@@ -16,6 +16,14 @@ router.post('/',ValidateRegistrationCreation,(req,res)=>
 router.get('/',(req,res)=>
     registrationController.getAllRegistrations(req,res)
 );
+// Route to get all users in an event
+router.get('/event/:eventId/users',ValidateEventIdParam,(req,res)=>
+    registrationController.getAllUserInEvent(req,res)
+);
+// Route to get registration by user and event
+router.get('/user/:userId/event/:eventId',ValidateUserIdParam,ValidateEventIdParam,(req,res)=>
+    registrationController.getRegistrationByUserAndEvent(req,res)
+);
 // Route to get registration by ID
 router.get('/id/:id',ValidateRegistrationIdParam,(req,res)=>
     registrationController.getRegistrationById(req,res)

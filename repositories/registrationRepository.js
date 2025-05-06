@@ -1,5 +1,6 @@
 const sequelize=require('../config/sequelize');
 const Registration = require('../models/registrationModel');
+const { use } = require('../routes/registrationRoutes');
 
 
 class RegistrationRepository {
@@ -22,7 +23,6 @@ class RegistrationRepository {
                 event_id: eventId,
             }, { transaction: t });
     
-            
                 await t.commit();
                 return registration;
             }catch (e) {
@@ -38,7 +38,22 @@ class RegistrationRepository {
             this.handleError(e, 'getAllRegistrations');
         }
     }
-
+static async getAllUserInEvent(eventId){
+    try {
+        const registrations = await Registration.findAll({ where: { event_id: eventId } });
+        return registrations.map(registration => registration.user_id);
+    } catch (e) {
+        this.handleError(e, 'getAllUserInEvent');
+    }
+}
+    static async getRegistrationByUserAndEvent(userId, eventId) {
+        try {
+            const registration = await Registration.findOne({ where: { user_id: userId, event_id: eventId } });
+            return registration;
+        } catch (e) {
+            this.handleError(e, 'getRegistrationByUserAndEvent');
+        }
+    }
     static async getRegistrationById(id) {
         try {
             const registration = await Registration.findOne({ where: { id } });

@@ -16,6 +16,10 @@ router.post('/', ValidateUserCreation, (req, res) =>
     UserController.createUser(req, res)
 );
 
+// route to authenticate user
+router.post('/authenticate', (req, res) =>
+    UserController.authenticateUser(req, res)
+);
 // Route to get all users
 router.get('/', (req, res) => UserController.getAllUsers(req, res));
 

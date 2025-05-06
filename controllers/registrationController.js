@@ -48,6 +48,24 @@ class RegistrationController {
             res.status(500).json({ error: error.message });
         }
     }
+    static async getAllUserInEvent(req, res) {
+        try {
+            const { eventId } = req.params;
+            const users = await RegistrationService.getAllUserInEvent(eventId);
+            res.status(200).json(users);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+    static async getRegistrationByUserAndEvent(req, res) {
+        try {
+            const { userId, eventId } = req.params;
+            const registration = await RegistrationService.getRegistrationByUserAndEvent(userId, eventId);
+            res.status(200).json(registration);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
     static async deleteRegistration(req, res) {
         try {
             const { id } = req.params;

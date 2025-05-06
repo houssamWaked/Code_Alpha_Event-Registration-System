@@ -60,6 +60,15 @@ class UserController{
             UserController.handleError(res, error);
         }
     }
+    static async authenticateUser(req, res) {
+        try {
+            const { email, password } = req.body;
+            const user = await userServices.authenticateUser(email, password);
+            res.status(200).json(user);
+        } catch (error) {
+            UserController.handleError(res, error);
+        }
+    }
     static async deleteUser(req, res) {
         try {
             const { id } = req.params;
