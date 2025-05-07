@@ -62,13 +62,14 @@ class UserController{
     }
     static async loginUser(req, res) {
         try {
-            const { email, password } = req.body;
-            const user = await userServices.loginUser(email, password);
-            res.status(200).json(user);
+          const { email, password } = req.body; // user sends plain password
+          const user = await userServices.loginUser({ email, password });
+          res.status(200).json(user);
         } catch (error) {
-            UserController.handleError(res, error);
+          UserController.handleError(res, error);
         }
-    }
+      }
+      
     static async deleteUser(req, res) {
         try {
             const { id } = req.params;

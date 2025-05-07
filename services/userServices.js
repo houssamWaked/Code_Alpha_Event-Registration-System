@@ -48,10 +48,10 @@ class UserServices {
   static async loginUser({ email, password }) {
     const user = await userRepository.getUserByEmail(email);
     if (!user) throw new Error('User not found');
-
-    const isMatch = await bcrypt.compare(password, user.password_hash);
+  
+    const isMatch = await bcrypt.compare(password, user.password_hash); // compare plain to hashed
     if (!isMatch) throw new Error('Invalid credentials');
-
+  
     const token = generateToken({ id: user.id, role: user.role });
     return {
       token,
@@ -63,6 +63,6 @@ class UserServices {
       },
     };
   }
-}
+}  
 
 module.exports = UserServices;
