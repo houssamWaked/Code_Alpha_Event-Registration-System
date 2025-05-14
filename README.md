@@ -1,30 +1,27 @@
-Event Registration System
+
+# Event Registration System
+
 A backend application designed to manage event registrations efficiently. Built with Node.js, Express.js, and Sequelize, this system provides a robust foundation for handling events, attendees, and user management.
 
-Features
-User Authentication: Secure login and registration using JWT.
+## Features
 
-Event Management: Create, update, and delete events.
+* **User Authentication:** Secure login and registration using JWT.
+* **Event Management:** Create, update, and delete events.
+* **Registration Handling:** Allow users to register for events.
+* **Role-Based Access Control:** Differentiate access levels between admins and regular users.
+* **Input Validation:** Ensure data integrity using Joi validators.
 
-Registration Handling: Allow users to register for events.
+## Technologies Used
 
-Role-Based Access Control: Differentiate access levels between admins and regular users.
+* **Backend:** Node.js, Express.js
+* **Database:** Sequelize ORM (compatible with MySQL, PostgreSQL, etc.)
+* **Authentication:** JSON Web Tokens (JWT)
+* **Validation:** Joi
+* **Environment Management:** dotenv
 
-Input Validation: Ensure data integrity using Joi validators.
+## Project Structure
 
-Technologies Used
-Backend: Node.js, Express.js
-
-Database: Sequelize ORM (compatible with MySQL, PostgreSQL, etc.)
-
-Authentication: JSON Web Tokens (JWT)
-
-Validation: Joi
-
-Environment Management: dotenv
-
-Project Structure
-bash
+```
 event-registration-system/
 ├── config/             # Database configuration
 ├── controllers/        # Route handlers
@@ -36,57 +33,79 @@ event-registration-system/
 ├── .env                # Environment variables
 ├── index.js            # Entry point
 └── package.json        # Project metadata and dependencies
-Installation
-Clone the repository:
+```
 
-bash
-git clone https://github.com/houssamWaked/Event-Registration-System.git
-cd Event-Registration-System
-Install dependencies:
+## Installation
 
-bash
-npm install
-Set up environment variables:
+1. **Clone the repository:**
 
-Create a .env file in the root directory and add the following:
+   ```bash
+   git clone https://github.com/houssamWaked/Event-Registration-System.git
+   cd Event-Registration-System
+   ```
 
-env
-PORT=3000
-DB_HOST=localhost
-DB_USER=your_database_username
-DB_PASSWORD=your_database_password
-DB_NAME=your_database_name
-JWT_SECRET=your_jwt_secret_key
-Configure the database:
+2. **Install dependencies:**
 
-Ensure your database is running and accessible with the credentials provided in the .env file.
+   ```bash
+   npm install
+   ```
 
-Run the application:
+3. **Set up environment variables:**
 
-bash
-npm start
-The server will start on http://localhost:3000.
+   Create a `.env` file in the root directory and add the following:
 
-API Endpoints
-Authentication
-POST /api/auth/register - Register a new user
+   ```env
+   PORT=3000
+   DB_HOST=localhost
+   DB_USER=your_database_username
+   DB_PASSWORD=your_database_password
+   DB_NAME=your_database_name
+   JWT_SECRET=your_jwt_secret_key
+   ```
 
-POST /api/auth/login - Login and receive a JWT
+4. **Configure the database:**
 
-Events
-GET /api/events - Retrieve all events
+   Ensure your database is running and accessible with the credentials provided in the `.env` file.
 
-POST /api/events - Create a new event
+5. **Run migrations and seeders (if applicable):**
 
-PUT /api/events/:id - Update an event
+   If you have defined migrations and seeders, run:
 
-DELETE /api/events/:id - Delete an event
+   ```bash
+   npx sequelize-cli db:migrate
+   npx sequelize-cli db:seed:all
+   ```
 
-Registrations
-POST /api/events/:id/register - Register for an event
+6. **Run the application:**
 
-Contributing
+   ```bash
+   npm start
+   ```
+
+   The server will start on `http://localhost:3000`.
+
+## API Endpoints
+
+### Authentication
+
+* `POST /api/auth/register` - Register a new user
+* `POST /api/auth/login` - Login and receive a JWT
+
+### Events
+
+* `GET /api/events` - Retrieve all events
+* `POST /api/events` - Create a new event
+* `PUT /api/events/:id` - Update an event
+* `DELETE /api/events/:id` - Delete an event
+
+### Registrations
+
+* `POST /api/events/:id/register` - Register for an event
+
+## Contributing
+
 Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
 
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
