@@ -67,16 +67,8 @@ event-registration-system/
 
    Ensure your database is running and accessible with the credentials provided in the `.env` file.
 
-5. **Run migrations and seeders (if applicable):**
 
-   If you have defined migrations and seeders, run:
-
-   ```bash
-   npx sequelize-cli db:migrate
-   npx sequelize-cli db:seed:all
-   ```
-
-6. **Run the application:**
+5. **Run the application:**
 
    ```bash
    npm start
